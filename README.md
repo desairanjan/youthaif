@@ -7,7 +7,7 @@ Built with **ASP.NET Core**, **React**, and **SQL Server**.
 ## Features
 
 - **Home page** — Mission, programs, and community hub information from the YouthAIF flyer
-- **Sevathon 9/20 tab** — Booth visitor check-in form for the September 20, 2025 Sevathon event
+- **Sevathon 9/20 tab** — Booth visitor check-in form for the September 20, 2026 Sevathon event
 - **Newsletter signup** — NAM Mindfulness and Journey of Starting a Company newsletters
 - **REST API** — ASP.NET Core Web API with SQL Server persistence
 
@@ -64,6 +64,20 @@ Frontend runs at `http://localhost:5173` and proxies API requests to the backend
 | POST   | `/api/sevathon/check-in`    | Booth visitor check-in   |
 | GET    | `/api/sevathon/stats`       | Event check-in stats     |
 | POST   | `/api/newsletter/subscribe` | Newsletter subscription  |
+| POST   | `/api/auth/login`           | Admin login (report tab) |
+| GET    | `/api/sevathon/visitors`    | Check-in list (admin)    |
+| GET    | `/api/sevathon/stats`       | Event stats (admin)      |
+
+## Admin report (`/reports`)
+
+The **Report** tab is password-protected. After sign-in you can view all Sevathon check-ins, refresh the list, and export CSV.
+
+**Development default password:** `YouthAIF-Sevathon-2026` (set in `appsettings.Development.json`).
+
+**Production:** set environment variables or `appsettings`:
+
+- `Admin__Password` — admin password
+- `Jwt__Key` — signing key (at least 32 characters)
 
 ## Project Structure
 

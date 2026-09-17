@@ -64,7 +64,7 @@ export default function SevathonPage() {
     <div className="sevathon">
       <section className="sevathon-hero">
         <div className="container">
-          <span className="event-badge">September 20, 2025</span>
+          <span className="event-badge">September 20, 2026</span>
           <h1>Welcome to YouthAIF at Sevathon!</h1>
           <p className="sevathon-intro">
             Thank you for visiting our booth. Check in below to connect with us,

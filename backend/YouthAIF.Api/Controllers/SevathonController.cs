@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using YouthAIF.Api.Data;
@@ -67,6 +68,7 @@ public class SevathonController : ControllerBase
     }
 
     [HttpGet("stats")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<object>> GetStats()
     {
         var totalVisitors = await _db.SevathonVisitors.CountAsync();
@@ -74,10 +76,30 @@ public class SevathonController : ControllerBase
 
         return Ok(new
         {
-            eventName = "Sevathon 2025",
-            eventDate = "2025-09-20",
+            eventName = "Sevathon 2026",
+            eventDate = "2026-09-20",
             totalVisitors,
             newsletterSignups
         });
+    }
+
+    [HttpGet("visitors")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<IEnumerable<SevathonVisitorResponseDto>>> GetVisitors()
+    {
+        var visitors = await _db.SevathonVisitors
+            .OrderByDescending(v => v.CheckedInAt)
+            .Select(v => new SevathonVisitorResponseDto(
+                v.Id,
+                v.FullName,
+                v.Email,
+                v.Phone,
+                v.Organization,
+                v.Interests,
+                v.WantsNewsletter,
+                v.CheckedInAt))
+            .ToListAsync();
+
+        return Ok(visitors);
     }
 }

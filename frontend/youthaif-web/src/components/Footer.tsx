@@ -1,26 +1,4 @@
-import { useState } from 'react'
-import { subscribeNewsletter } from '../api/client'
-
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [newsletterType, setNewsletterType] = useState('NAM Mindfulness')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [message, setMessage] = useState('')
-
-  async function handleSubscribe(e: React.FormEvent) {
-    e.preventDefault()
-    setStatus('loading')
-    try {
-      const result = await subscribeNewsletter({ email, newsletterType })
-      setStatus('success')
-      setMessage(result.message)
-      setEmail('')
-    } catch (err) {
-      setStatus('error')
-      setMessage(err instanceof Error ? err.message : 'Subscription failed')
-    }
-  }
-
   return (
     <footer className="footer">
       <div className="container">
@@ -36,24 +14,30 @@ export default function Footer() {
               <li><strong>NAM Mindfulness</strong> – Ancient wisdom for modern life</li>
               <li><strong>Journey of Starting a Company</strong> – Founder insights</li>
             </ul>
-            <form className="subscribe-form" onSubmit={handleSubscribe}>
-              <select value={newsletterType} onChange={e => setNewsletterType(e.target.value)}>
-                <option value="NAM Mindfulness">NAM Mindfulness</option>
-                <option value="Journey of Starting a Company">Journey of Starting a Company</option>
-              </select>
-              <input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-              <button type="submit" disabled={status === 'loading'}>
-                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
-              </button>
-            </form>
-            {status === 'success' && <p className="form-success">{message}</p>}
-            {status === 'error' && <p className="form-error">{message}</p>}
+
+            <div className="newsletter-block">
+              <p className="newsletter-block-label">NAM Mindfulness</p>
+              <a
+                className="yt-subscribe-button"
+                href="https://www.youtube.com/channel/UCrFGEVcXojxjOj_oIJnsGfw?sub_confirmation=1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Subscribe on YouTube
+              </a>
+            </div>
+
+            <div className="newsletter-block">
+              <p className="newsletter-block-label">Journey of Starting a Company</p>
+              <a
+                className="libutton"
+                href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7274560368004251648"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Subscribe on LinkedIn
+              </a>
+            </div>
           </div>
 
           <div className="footer-section">

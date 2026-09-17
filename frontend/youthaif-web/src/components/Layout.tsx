@@ -17,6 +17,9 @@ export default function Layout() {
             <NavLink to="/sevathon" className={({ isActive }) => isActive ? 'nav-link active sevathon-link' : 'nav-link sevathon-link'}>
               Sevathon 9/20
             </NavLink>
+            <NavLink to="/reports" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+              Report
+            </NavLink>
           </nav>
         </div>
       </header>
