@@ -34,4 +34,4 @@ jobs:
           # Adjust the following paths if your frontend build outputs elsewhere
           app_location: "frontend/youthaif-web"
           api_location: ""
-          output_location: "frontend/youthaif-web/dist"
+          output_location: "dist"
