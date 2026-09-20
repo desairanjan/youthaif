@@ -35,3 +35,4 @@ jobs:
           app_location: "frontend/youthaif-web"
           api_location: ""
           output_location: "dist"
+          app_build_command: "npm run build"
