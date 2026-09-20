@@ -1,0 +1,40 @@
+name: Build and Deploy Backend to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore and Build
+        working-directory: backend/YouthAIF.Api
+        run: |
+          dotnet restore
+          dotnet publish -c Release -o publish
+
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: backend/YouthAIF.Api/publish
+
+      - name: Set App Settings
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 'latest'
+          inlineScript: |
+            az webapp config appsettings set --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }} --settings \
+              Admin__Password="${{ secrets.ADMIN_PASSWORD }}" \
+              Jwt__Key="${{ secrets.JWT_KEY }}" \
+              ConnectionStrings__DefaultConnection="${{ secrets.CONNECTION_STRING }}"

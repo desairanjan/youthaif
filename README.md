@@ -79,6 +79,34 @@ The **Report** tab is password-protected. After sign-in you can view all Sevatho
 - `Admin__Password` — admin password
 - `Jwt__Key` — signing key (at least 32 characters)
 
+Local setup options
+- Temporary (PowerShell session):
+
+```powershell
+$env:Admin_Password = "YouthAIF-Sevathon-2026"
+$env:Jwt_Key = "YouthAIF-Dev-Signing-Key-Min-32-Chars!"
+# available to the current shell/process only
+```
+
+- Persistent (current user):
+
+```powershell
+setx Admin_Password "YouthAIF-Sevathon-2026"
+setx Jwt_Key "YouthAIF-Dev-Signing-Key-Min-32-Chars!"
+# open a new shell for these to take effect
+```
+
+- Recommended for local development (dotnet user-secrets):
+
+```bash
+cd backend/YouthAIF.Api
+dotnet user-secrets init
+dotnet user-secrets set "Admin:Password" "YouthAIF-Sevathon-2026"
+dotnet user-secrets set "Jwt:Key" "YouthAIF-Dev-Signing-Key-Min-32-Chars!"
+```
+
+- Visual Studio debug (launchSettings.json): add `Admin__Password` and `Jwt__Key` under the Development profile(s). The double-underscore maps to the `:` configuration key (e.g. `Admin__Password` -> `Admin:Password`).
+
 ## Project Structure
 
 ```
