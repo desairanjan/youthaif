@@ -19,8 +19,8 @@ jobs:
       - name: Restore and Build
         working-directory: backend/YouthAIF.Api
         run: |
-          dotnet restore
-          dotnet publish -c Release -o publish
+          dotnet restore YouthAIF.Api.csproj
+          dotnet publish YouthAIF.Api.csproj -c Release -o ./publish
 
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
